@@ -1,0 +1,36 @@
+version: '3.3'
+
+services:
+  generateor_emulator:
+    # 镜像由 build 指定，并打上 tag
+    image: fuzzotron_for_cve-2018-16333_for_cve-2018-16333
+    # 容器名称
+    container_name: fuzzotron_for_cve-2018-16333_for_cve-2018-16333
+
+    # 构建配置
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+
+    # 环境变量文件
+    env_file:
+      - ./env/CVE-2018-16333_for_fuzzotron_for_cve-2018-16333.env
+
+    # 启用交互式终端
+    stdin_open: true
+    tty: true
+
+    # 特权模式
+    privileged: true
+
+    # 自动映射所有暴露端口（等价于 -P）
+    ports:
+      - "80"
+
+    # 挂载命名卷到容器目录
+    volumes:
+      - vol_crashes:/fuzzotron/crashes
+
+# 定义命名卷
+volumes:
+  vol_crashes:
